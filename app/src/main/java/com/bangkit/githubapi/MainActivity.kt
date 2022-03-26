@@ -2,13 +2,19 @@ package com.bangkit.githubapi
 
 import android.app.SearchManager
 import android.content.Context
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
-import android.view.MenuItem
-import android.widget.SearchView
-import android.widget.Toast
+import android.view.View
+import androidx.appcompat.widget.SearchView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bangkit.githubapi.databinding.ActivityMainBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
 
@@ -16,23 +22,84 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        if (applicationContext.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            val layoutManager = GridLayoutManager(this, 2)
+            binding.rvUsers.layoutManager = layoutManager
+        } else {
+            val layoutManager = LinearLayoutManager(this)
+            binding.rvUsers.layoutManager = layoutManager
+        }
+
+        findUser()
     }
 
+    private fun findUser() {
+        showProgressBar(true)
+        val client = ApiConfig.getApiService().getUser(USERNAME)
+        client.enqueue(object: Callback<UserSearchResponse> {
+            override fun onResponse(
+                call: Call<UserSearchResponse>,
+                response: Response<UserSearchResponse>
+            ) {
+                if (response.isSuccessful) {
+                    showProgressBar(false)
+                    val responseBody = response.body()
+                    if (responseBody != null) {
+                        setSearchUserData(responseBody.items)
+                    }
+                }
+                else {
+                    Log.e(this@MainActivity.toString(), "onFailure: ${response.message()}")
+                }
+            }
+
+            override fun onFailure(call: Call<UserSearchResponse>, t: Throwable) {
+                Log.e(this@MainActivity.toString(), "onFailure: ${t.message}")
+            }
+        })
+    }
+
+    private fun showProgressBar(state: Boolean) {
+        if (state) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.INVISIBLE
+        }
+    }
+    private fun setSearchUserData(items: List<ItemsItem?>?) {
+
+        val userList = ArrayList<User>()
+
+        if (items != null) {
+            for (item in items) {
+                userList.add(
+                    User(
+                        item?.login,
+                        item?.htmlUrl,
+                        item?.avatarUrl
+                    )
+                )
+            }
+        }
+        val adapter = UserAdapter(userList)
+        binding.rvUsers.adapter = adapter
+    }
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.actionbar_menu, menu)
 
         val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val searchView = menu?.findItem(R.id.menu_search)?.actionView as androidx.appcompat.widget.SearchView
+        val searchView = menu?.findItem(R.id.menu_search)?.actionView as SearchView
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
         searchView.queryHint = resources.getString(R.string.search_hint)
-        searchView.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener {
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
-                Toast.makeText(this@MainActivity, query, Toast.LENGTH_SHORT).show()
+                USERNAME = query
+                findUser()
                 searchView.clearFocus()
                 return true
             }
@@ -42,4 +109,8 @@ class MainActivity : AppCompatActivity() {
         })
         return true
     }
+    companion object {
+        private var USERNAME = "username"
+    }
+
 }
