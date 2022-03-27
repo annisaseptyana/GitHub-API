@@ -1,5 +1,6 @@
 package com.bangkit.githubapi
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,13 +22,18 @@ class UserAdapter(private val listUsers: ArrayList<User>) : RecyclerView.Adapter
     }
 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
-       val (login, url, avatar_url) = listUsers[position]
+       val (login, html_url, avatar_url) = listUsers[position]
         holder.txtUsername.text = login
-        holder.txtHtmlUrl.text = url
+        holder.txtHtmlUrl.text = html_url
         Glide.with(holder.imgAvatar.context)
             .load(avatar_url)
             .circleCrop()
             .into(holder.imgAvatar)
+        holder.imgAvatar.setOnClickListener {
+            val intent = Intent(holder.itemView.context, UserDetailActivity::class.java)
+            intent.putExtra(UserDetailActivity.USERNAME, login)
+            holder.itemView.context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int = listUsers.size

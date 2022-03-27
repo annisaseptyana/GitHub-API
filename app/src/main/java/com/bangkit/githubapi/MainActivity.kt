@@ -20,26 +20,43 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    companion object {
+        private var USERNAME = "username"
+    }
 
-        if (applicationContext.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            val layoutManager = GridLayoutManager(this, 2)
-            binding.rvUsers.layoutManager = layoutManager
-        } else {
-            val layoutManager = LinearLayoutManager(this)
-            binding.rvUsers.layoutManager = layoutManager
+    private fun setSearchUserData(items: List<ItemsItem?>?) {
+
+        val userList = ArrayList<User>()
+        if (items != null) {
+            for (item in items) {
+                userList.add(
+                    User(
+                        item?.login,
+                        item?.htmlUrl,
+                        item?.avatarUrl
+                    )
+                )
+            }
         }
+        val adapter = UserAdapter(userList)
+        binding.rvUsers.adapter = adapter
+    }
 
-        findUser()
+    private fun showProgressBar(state: Boolean) {
+
+        if (state) {
+            binding.progressBar.visibility = View.VISIBLE
+        } else {
+            binding.progressBar.visibility = View.INVISIBLE
+        }
     }
 
     private fun findUser() {
+
         showProgressBar(true)
         val client = ApiConfig.getApiService().getUser(USERNAME)
         client.enqueue(object: Callback<UserSearchResponse> {
+
             override fun onResponse(
                 call: Call<UserSearchResponse>,
                 response: Response<UserSearchResponse>
@@ -62,32 +79,27 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun showProgressBar(state: Boolean) {
-        if (state) {
-            binding.progressBar.visibility = View.VISIBLE
+    override fun onCreate(savedInstanceState: Bundle?) {
+
+        supportActionBar?.title = "Search User"
+
+        super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        if (applicationContext.resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            val layoutManager = GridLayoutManager(this, 2)
+            binding.rvUsers.layoutManager = layoutManager
         } else {
-            binding.progressBar.visibility = View.INVISIBLE
+            val layoutManager = LinearLayoutManager(this)
+            binding.rvUsers.layoutManager = layoutManager
         }
-    }
-    private fun setSearchUserData(items: List<ItemsItem?>?) {
 
-        val userList = ArrayList<User>()
-
-        if (items != null) {
-            for (item in items) {
-                userList.add(
-                    User(
-                        item?.login,
-                        item?.htmlUrl,
-                        item?.avatarUrl
-                    )
-                )
-            }
-        }
-        val adapter = UserAdapter(userList)
-        binding.rvUsers.adapter = adapter
+        findUser()
     }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
         val inflater = menuInflater
         inflater.inflate(R.menu.actionbar_menu, menu)
 
@@ -103,14 +115,11 @@ class MainActivity : AppCompatActivity() {
                 searchView.clearFocus()
                 return true
             }
+
             override fun onQueryTextChange(newText: String): Boolean {
                 return false
             }
         })
         return true
     }
-    companion object {
-        private var USERNAME = "username"
-    }
-
 }
