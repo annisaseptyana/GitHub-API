@@ -66,7 +66,7 @@ class UserDetailActivity : AppCompatActivity() {
         binding = ActivityUserDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        supportActionBar?.title = "${USERNAME}'s Profile"
+        supportActionBar?.title = "User's Details"
 
         val userDetail = intent.getStringExtra(USERNAME)
         getUserDetail(userDetail)
