@@ -1,4 +1,4 @@
-package com.bangkit.githubapi
+package com.bangkit.githubapi.database
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

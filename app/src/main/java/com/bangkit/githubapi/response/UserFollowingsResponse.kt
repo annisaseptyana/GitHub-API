@@ -1,8 +1,8 @@
-package com.bangkit.githubapi
+package com.bangkit.githubapi.response
 
 import com.google.gson.annotations.SerializedName
 
-data class UserFollowersResponse(
+data class UserFollowingResponse(
 
 	@field:SerializedName("gists_url")
 	val gistsUrl: String? = null,

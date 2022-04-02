@@ -1,8 +1,20 @@
-package com.bangkit.githubapi
+package com.bangkit.githubapi.response
 
 import com.google.gson.annotations.SerializedName
 
-data class UserFollowingResponse(
+data class UserSearchResponse(
+
+	@field:SerializedName("total_count")
+	val totalCount: Int? = null,
+
+	@field:SerializedName("incomplete_results")
+	val incompleteResults: Boolean? = null,
+
+	@field:SerializedName("items")
+	val items: List<ItemsItem?>? = null
+)
+
+data class ItemsItem(
 
 	@field:SerializedName("gists_url")
 	val gistsUrl: String? = null,
@@ -30,6 +42,9 @@ data class UserFollowingResponse(
 
 	@field:SerializedName("subscriptions_url")
 	val subscriptionsUrl: String? = null,
+
+	@field:SerializedName("score")
+	val score: Double? = null,
 
 	@field:SerializedName("received_events_url")
 	val receivedEventsUrl: String? = null,

@@ -1,4 +1,4 @@
-package com.bangkit.githubapi
+package com.bangkit.githubapi.ui
 
 import android.app.SearchManager
 import android.content.Context
@@ -11,7 +11,13 @@ import android.view.View
 import androidx.appcompat.widget.SearchView
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bangkit.githubapi.ApiConfig
+import com.bangkit.githubapi.R
+import com.bangkit.githubapi.adapter.UserAdapter
+import com.bangkit.githubapi.database.User
 import com.bangkit.githubapi.databinding.ActivityMainBinding
+import com.bangkit.githubapi.response.ItemsItem
+import com.bangkit.githubapi.response.UserSearchResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

@@ -1,4 +1,4 @@
-package com.bangkit.githubapi
+package com.bangkit.githubapi.response
 
 import com.google.gson.annotations.SerializedName
 

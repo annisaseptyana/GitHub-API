@@ -1,4 +1,4 @@
-package com.bangkit.githubapi
+package com.bangkit.githubapi.ui
 
 import android.content.res.Configuration
 import android.os.Bundle
@@ -9,7 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bangkit.githubapi.ApiConfig
+import com.bangkit.githubapi.R
+import com.bangkit.githubapi.adapter.UserAdapter
+import com.bangkit.githubapi.database.User
 import com.bangkit.githubapi.databinding.FragmentFollowingsBinding
+import com.bangkit.githubapi.response.UserFollowingResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

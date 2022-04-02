@@ -1,4 +1,4 @@
-package com.bangkit.githubapi
+package com.bangkit.githubapi.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -6,7 +6,11 @@ import android.util.Log
 import android.view.View
 import androidx.annotation.StringRes
 import androidx.viewpager2.widget.ViewPager2
+import com.bangkit.githubapi.ApiConfig
+import com.bangkit.githubapi.R
+import com.bangkit.githubapi.adapter.SectionsPagerAdapter
 import com.bangkit.githubapi.databinding.ActivityUserDetailBinding
+import com.bangkit.githubapi.response.UserDetailResponse
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator

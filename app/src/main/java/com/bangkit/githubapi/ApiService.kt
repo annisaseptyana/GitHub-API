@@ -1,5 +1,9 @@
 package com.bangkit.githubapi
 
+import com.bangkit.githubapi.response.UserDetailResponse
+import com.bangkit.githubapi.response.UserFollowersResponse
+import com.bangkit.githubapi.response.UserFollowingResponse
+import com.bangkit.githubapi.response.UserSearchResponse
 import retrofit2.Call
 import retrofit2.http.*
 

@@ -1,9 +1,11 @@
-package com.bangkit.githubapi
+package com.bangkit.githubapi.adapter
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.bangkit.githubapi.ui.FollowersFragment
+import com.bangkit.githubapi.ui.FollowingsFragment
 
 class SectionsPagerAdapter(activity: AppCompatActivity, data: Bundle) : FragmentStateAdapter(activity) {
 

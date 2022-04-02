@@ -1,4 +1,4 @@
-package com.bangkit.githubapi
+package com.bangkit.githubapi.adapter
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bangkit.githubapi.R
+import com.bangkit.githubapi.database.User
+import com.bangkit.githubapi.ui.UserDetailActivity
 import com.bumptech.glide.Glide
 
 class UserAdapter(private val listUsers: ArrayList<User>) : RecyclerView.Adapter<UserAdapter.ListViewHolder>() {
