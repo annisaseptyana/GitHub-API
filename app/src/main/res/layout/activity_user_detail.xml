@@ -164,7 +164,7 @@
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"
-        android:background="?attr/colorPrimary"
+        style="@style/colorBackground"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
     </LinearLayout>
