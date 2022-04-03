@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GitHubAPI">
         <activity
+            android:name=".ui.FavoriteActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.UserDetailActivity"
             android:exported="false" />
         <activity
