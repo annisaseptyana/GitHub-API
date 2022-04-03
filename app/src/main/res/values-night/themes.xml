@@ -15,7 +15,7 @@
     </style>
 
     <style name="colorBackground">
-        <item name="android:colorBackground">@color/git_gray</item>
+        <item name="android:colorBackground">@color/git_black</item>
     </style>
 
 </resources>

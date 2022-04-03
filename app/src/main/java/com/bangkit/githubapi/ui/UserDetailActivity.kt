@@ -13,7 +13,6 @@ import com.bangkit.githubapi.R
 import com.bangkit.githubapi.adapter.SectionsPagerAdapter
 import com.bangkit.githubapi.databinding.ActivityUserDetailBinding
 import com.bangkit.githubapi.entity.Favorite
-import com.bangkit.githubapi.helper.DateHelper
 import com.bangkit.githubapi.helper.ViewModelFactory
 import com.bangkit.githubapi.response.UserDetailResponse
 import com.bumptech.glide.Glide
@@ -47,8 +46,8 @@ class UserDetailActivity : AppCompatActivity() {
         client.enqueue(object: Callback<UserDetailResponse> {
             override fun onResponse(
                 call: Call<UserDetailResponse>,
-                response: Response<UserDetailResponse>
-            ) {
+                response: Response<UserDetailResponse>) {
+
                 val responseBody = response.body()
                 if(response.isSuccessful && responseBody != null) {
                    binding.progressBar.visibility = View.INVISIBLE
@@ -56,13 +55,16 @@ class UserDetailActivity : AppCompatActivity() {
                        .load(responseBody.avatarUrl)
                        .circleCrop()
                        .into(binding.ivDetailAvatar)
-                   binding.tvDetailUsername.text = responseBody.login
-                   binding.tvDetailName.text = responseBody.name
-                   binding.tvDetailLocation.text = (responseBody.location ?: resources.getString(R.string.location)).toString()
-                   binding.tvDetailCompany.text = responseBody.company.toString()
-                   binding.tvFollowerAmount.text = responseBody.followers.toString()
-                   binding.tvFollowingAmount.text = responseBody.following.toString()
-                   binding.tvRepositoryAmount.text = responseBody.publicRepos.toString()
+
+                   binding.apply {
+                       tvDetailUsername.text = responseBody.login
+                       tvDetailName.text = responseBody.name
+                       tvDetailLocation.text = (responseBody.location ?: resources.getString(R.string.location)).toString()
+                       tvDetailCompany.text = responseBody.company.toString()
+                       tvFollowerAmount.text = responseBody.followers.toString()
+                       tvFollowingAmount.text = responseBody.following.toString()
+                       tvRepositoryAmount.text = responseBody.publicRepos.toString()
+                   }
                 }
                 else {
                    Log.e(this@UserDetailActivity.toString(), "onFailure: ${response.message()}")
@@ -125,7 +127,6 @@ class UserDetailActivity : AppCompatActivity() {
                 favorite.login = login
                 favorite.url = url
                 favorite.avatar_url = avatar
-                favorite.date = DateHelper.getCurrentDate()
 
                 if(isExist) {
                     favoriteViewModel.delete(favorite)

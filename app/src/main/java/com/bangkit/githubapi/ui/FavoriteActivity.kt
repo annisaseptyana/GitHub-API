@@ -19,15 +19,12 @@ class FavoriteActivity : AppCompatActivity() {
         return ViewModelProvider(activity, factory).get(FavoriteViewModel::class.java)
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityFavoriteBinding.inflate(layoutInflater)
         setContentView(binding?.root)
+
+        supportActionBar?.title = "Favorites List"
 
         val favoriteViewModel = obtainViewModel(this@FavoriteActivity)
         favoriteViewModel.getAllFavorites().observe(this) { favoriteList ->
@@ -40,5 +37,10 @@ class FavoriteActivity : AppCompatActivity() {
         binding?.rvFavorites?.layoutManager = LinearLayoutManager(this)
         binding?.rvFavorites?.setHasFixedSize(true)
         binding?.rvFavorites?.adapter = adapter
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 }

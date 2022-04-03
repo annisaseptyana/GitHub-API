@@ -12,7 +12,9 @@ import com.bangkit.githubapi.ui.UserDetailActivity
 import com.bumptech.glide.Glide
 
 class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>() {
+
     private val listFavorites = ArrayList<Favorite>()
+
     fun setListUsers(listFavorites: List<Favorite>) {
         val diffCallback = FavoriteDiffCallback(this.listFavorites, listFavorites)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
