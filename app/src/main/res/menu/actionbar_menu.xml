@@ -9,6 +9,11 @@
         app:actionViewClass="androidx.appcompat.widget.SearchView" />
     <group android:menuCategory="container">
         <item
+            android:id="@+id/menu_favorite"
+            android:icon="@drawable/ic_baseline_favorite_24"
+            android:title="@string/favorite"
+            app:showAsAction="ifRoom"/>
+        <item
             android:id="@+id/menu_setting"
             android:icon="@drawable/ic_baseline_settings_24"
             android:title="@string/setting"

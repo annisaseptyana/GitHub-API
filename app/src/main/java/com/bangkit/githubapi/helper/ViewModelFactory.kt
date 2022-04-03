@@ -3,7 +3,6 @@ package com.bangkit.githubapi.helper
 import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.bangkit.githubapi.ui.FavoriteAddUpdateViewModel
 import com.bangkit.githubapi.ui.FavoriteViewModel
 
 class ViewModelFactory
@@ -23,11 +22,10 @@ private constructor(private val mApplication: Application) : ViewModelProvider.N
         }
     }
     @Suppress("UNCHECKED_CAST")
+
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(FavoriteViewModel::class.java)) {
             return FavoriteViewModel(mApplication) as T
-        } else if (modelClass.isAssignableFrom(FavoriteAddUpdateViewModel::class.java)) {
-            return FavoriteAddUpdateViewModel(mApplication) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
     }

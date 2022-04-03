@@ -6,13 +6,28 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bangkit.githubapi.R
 import com.bangkit.githubapi.database.User
+import com.bangkit.githubapi.entity.Favorite
+import com.bangkit.githubapi.helper.FavoriteDiffCallback
 import com.bangkit.githubapi.ui.UserDetailActivity
 import com.bumptech.glide.Glide
 
 class UserAdapter(private val listUsers: ArrayList<User>) : RecyclerView.Adapter<UserAdapter.ListViewHolder>() {
+
+    private val listFavorites = ArrayList<Favorite>()
+
+    fun setListFavorites (list: List<Favorite>) {
+        val diffCallback = FavoriteDiffCallback(this.listFavorites, listFavorites)
+        val diffResult = DiffUtil.calculateDiff(diffCallback)
+        this.listFavorites.clear()
+        this.listFavorites.addAll(list)
+        diffResult.dispatchUpdatesTo(this)
+    }
+
+
     class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         var imgAvatar: ImageView = itemView.findViewById(R.id.iv_avatar)
         var txtUsername: TextView = itemView.findViewById(R.id.tv_username)
@@ -35,6 +50,8 @@ class UserAdapter(private val listUsers: ArrayList<User>) : RecyclerView.Adapter
         holder.imgAvatar.setOnClickListener {
             val intent = Intent(holder.itemView.context, UserDetailActivity::class.java)
             intent.putExtra(UserDetailActivity.USERNAME, login)
+            intent.putExtra(UserDetailActivity.URL, html_url)
+            intent.putExtra(UserDetailActivity.AVATAR, avatar_url)
             holder.itemView.context.startActivity(intent)
         }
     }

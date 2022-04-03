@@ -4,12 +4,17 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.StringRes
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.bangkit.githubapi.ApiConfig
 import com.bangkit.githubapi.R
 import com.bangkit.githubapi.adapter.SectionsPagerAdapter
 import com.bangkit.githubapi.databinding.ActivityUserDetailBinding
+import com.bangkit.githubapi.entity.Favorite
+import com.bangkit.githubapi.helper.DateHelper
+import com.bangkit.githubapi.helper.ViewModelFactory
 import com.bangkit.githubapi.response.UserDetailResponse
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayout
@@ -21,6 +26,9 @@ import retrofit2.Response
 class UserDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityUserDetailBinding
+    private lateinit var favoriteViewModel: FavoriteViewModel
+    private var favorite: Favorite? = null
+    private var isExist = false
 
     companion object {
         @StringRes
@@ -29,6 +37,8 @@ class UserDetailActivity : AppCompatActivity() {
             R.string.tab_text_2
         )
         const val USERNAME = "username"
+        const val URL = "url"
+        const val AVATAR = "avatar"
     }
 
     private fun getUserDetail(userDetail: String?) {
@@ -65,12 +75,20 @@ class UserDetailActivity : AppCompatActivity() {
         })
     }
 
+    private fun obtainViewModel(activity: AppCompatActivity): FavoriteViewModel {
+        val factory = ViewModelFactory.getInstance(activity.application)
+        return ViewModelProvider(activity, factory)[FavoriteViewModel::class.java]
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUserDetailBinding.inflate(layoutInflater)
+        favoriteViewModel = obtainViewModel(this@UserDetailActivity)
+        favorite = Favorite()
         setContentView(binding.root)
 
         supportActionBar?.title = "User's Details"
+        supportActionBar?.elevation = 0f
 
         val userDetail = intent.getStringExtra(USERNAME)
         getUserDetail(userDetail)
@@ -86,6 +104,38 @@ class UserDetailActivity : AppCompatActivity() {
             tab.text = resources.getString(TAB_TITLES[position])
         }.attach()
 
-        supportActionBar?.elevation = 0f
+        favoriteViewModel.getFavorite(intent.getStringExtra(USERNAME)!!).observe(this) { favoritesList ->
+            if (favoritesList.isNotEmpty()) {
+                isExist = true
+                binding.favoriteButton.setImageResource(R.drawable.ic_baseline_favorite_24)
+            }
+            else {
+                isExist = false
+                binding.favoriteButton.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+            }
+        }
+
+        binding.favoriteButton.setOnClickListener{
+            val login = intent.getStringExtra(USERNAME)
+            val url = intent.getStringExtra(URL)
+            val avatar = intent.getStringExtra(AVATAR)
+
+            favorite.let {
+                favorite?.login = login
+                favorite?.url = url
+                favorite?.avatar_url = avatar
+                favorite?.date = DateHelper.getCurrentDate()
+
+                if(isExist) {
+                    favoriteViewModel.update(favorite as Favorite)
+                    Toast.makeText(this, "Added to Favorites", Toast.LENGTH_SHORT).show()
+                }
+                else {
+                    favoriteViewModel.insert(favorite as Favorite)
+                    binding.favoriteButton.setImageResource(R.drawable.ic_baseline_favorite_24)
+                    Toast.makeText(this, "Added to Favorites", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
     }
 }
