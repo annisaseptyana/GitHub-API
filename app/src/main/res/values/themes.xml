@@ -2,15 +2,15 @@
     <!-- Base application theme. -->
     <style name="Theme.GitHubAPI" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/git_gray</item>
-        <item name="colorPrimaryVariant">@color/git_black</item>
-        <item name="colorOnPrimary">@color/git_white</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorPrimaryVariant">@color/light_gray</item>
+        <item name="colorOnPrimary">@color/git_gray</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/git_gray</item>
+        <item name="colorSecondary">@color/white</item>
         <item name="colorSecondaryVariant">@color/git_green</item>
-        <item name="colorOnSecondary">@color/white</item>
+        <item name="colorOnSecondary">@color/git_black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorOnPrimary</item>
         <!-- Customize your theme here. -->
     </style>
 </resources>

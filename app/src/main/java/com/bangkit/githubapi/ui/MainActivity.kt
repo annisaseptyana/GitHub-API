@@ -135,7 +135,11 @@ class MainActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.menu_favorite -> {
                 startActivity(Intent(this, FavoriteActivity::class.java))
-            true
+                true
+            }
+            R.id.menu_setting -> {
+                startActivity(Intent(this, SettingActivity::class.java))
+                true
             }
             else -> true
         }

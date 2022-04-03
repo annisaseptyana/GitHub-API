@@ -10,7 +10,7 @@
 
     <LinearLayout
         android:id="@+id/detail_layout"
-        android:background="@color/git_black"
+        android:background="?attr/colorPrimaryVariant"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -48,7 +48,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/username"
             android:textStyle="bold"
-            android:textColor="@color/white"
+            android:textColor="?attr/colorOnPrimary"
             app:layout_constraintEnd_toEndOf="@+id/iv_detail_avatar"
             app:layout_constraintStart_toStartOf="@+id/iv_detail_avatar"
             app:layout_constraintTop_toBottomOf="@+id/iv_detail_avatar" />
@@ -59,7 +59,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="@string/name"
-            android:textColor="@color/white"
+            android:textColor="?attr/colorOnPrimary"
             app:layout_constraintEnd_toEndOf="@+id/tv_detail_username"
             app:layout_constraintStart_toStartOf="@+id/tv_detail_username"
             app:layout_constraintTop_toBottomOf="@+id/tv_detail_username" />
@@ -70,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:text="@string/location"
-            android:textColor="@color/white"
+            android:textColor="?attr/colorOnPrimary"
             app:layout_constraintEnd_toEndOf="@+id/tv_detail_name"
             app:layout_constraintStart_toStartOf="@+id/tv_detail_name"
             app:layout_constraintTop_toBottomOf="@+id/tv_detail_name" />
@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="@string/company"
-            android:textColor="@color/white"
+            android:textColor="?attr/colorOnPrimary"
             app:layout_constraintEnd_toEndOf="@+id/tv_detail_location"
             app:layout_constraintStart_toStartOf="@+id/tv_detail_location"
             app:layout_constraintTop_toBottomOf="@+id/tv_detail_location" />
@@ -93,7 +93,7 @@
             android:layout_marginBottom="4dp"
             android:text="@string/follower_amount"
             android:textStyle="bold"
-            android:textColor="@color/white"
+            android:textColor="?attr/colorOnPrimary"
             app:layout_constraintBottom_toTopOf="@+id/tv_follower"
             app:layout_constraintEnd_toEndOf="@+id/tv_follower"
             app:layout_constraintStart_toStartOf="@+id/tv_follower" />
@@ -104,7 +104,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="24dp"
             android:text="@string/follower"
-            android:textColor="@color/white"
+            android:textColor="?attr/colorOnPrimary"
             app:layout_constraintBottom_toBottomOf="@+id/tv_following"
             app:layout_constraintEnd_toStartOf="@+id/tv_following" />
 
@@ -115,7 +115,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/following_amount"
             android:textStyle="bold"
-            android:textColor="@color/white"
+            android:textColor="?attr/colorOnPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tv_detail_company" />
@@ -126,7 +126,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="@string/following"
-            android:textColor="@color/white"
+            android:textColor="?attr/colorOnPrimary"
             app:layout_constraintEnd_toEndOf="@+id/tv_following_amount"
             app:layout_constraintStart_toStartOf="@+id/tv_following_amount"
             app:layout_constraintTop_toBottomOf="@+id/tv_following_amount" />
@@ -138,7 +138,7 @@
             android:layout_marginBottom="4dp"
             android:text="@string/repo_amount"
             android:textStyle="bold"
-            android:textColor="@color/white"
+            android:textColor="?attr/colorOnPrimary"
             app:layout_constraintBottom_toTopOf="@+id/tv_repository"
             app:layout_constraintEnd_toEndOf="@+id/tv_repository"
             app:layout_constraintStart_toStartOf="@+id/tv_repository" />
@@ -149,7 +149,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
             android:text="@string/repository"
-            android:textColor="@color/white"
+            android:textColor="?attr/colorOnPrimary"
             app:layout_constraintBottom_toBottomOf="@+id/tv_following"
             app:layout_constraintStart_toEndOf="@+id/tv_following" />
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -158,13 +158,13 @@
         android:id="@+id/tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?attr/colorPrimary"
-        app:tabTextColor="@color/white"
+        android:background="?attr/colorSecondaryVariant"
+        app:tabTextColor="?attr/colorOnSecondary"
         android:layout_marginTop="16dp"/>
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/view_pager"
-        android:background="@color/git_gray"
+        android:background="?attr/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
     </LinearLayout>

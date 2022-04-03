@@ -5,4 +5,5 @@
     <color name="git_gray">#2B3137</color>
     <color name="git_white">#FAFBFC</color>
     <color name="git_green">#2DBA4E</color>
+    <color name="light_gray">#FCFDFD</color>
 </resources>
