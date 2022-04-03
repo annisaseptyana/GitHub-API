@@ -13,11 +13,11 @@ import com.bumptech.glide.Glide
 
 class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>() {
     private val listFavorites = ArrayList<Favorite>()
-    fun setListUsers(listNotes: List<Favorite>) {
-        val diffCallback = FavoriteDiffCallback(this.listFavorites, listNotes)
+    fun setListUsers(listFavorites: List<Favorite>) {
+        val diffCallback = FavoriteDiffCallback(this.listFavorites, listFavorites)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
         this.listFavorites.clear()
-        this.listFavorites.addAll(listNotes)
+        this.listFavorites.addAll(listFavorites)
         diffResult.dispatchUpdatesTo(this)
     }
 
@@ -32,11 +32,12 @@ class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>
 
     override fun getItemCount(): Int = listFavorites.size
 
-    inner class FavoriteViewHolder(private val binding: ItemUserBinding) : RecyclerView.ViewHolder(binding.root) {
+    inner class FavoriteViewHolder(private val binding: ItemUserBinding) :
+        RecyclerView.ViewHolder(binding.root) {
         fun bind(favorite: Favorite) {
             with(binding) {
                 tvUsername.text = favorite.login
-                tvUrl.text = favorite.login
+                tvUrl.text = favorite.url
                 Glide.with(this.ivAvatar)
                     .load(favorite.avatar_url)
                     .circleCrop()
@@ -44,7 +45,7 @@ class FavoriteAdapter : RecyclerView.Adapter<FavoriteAdapter.FavoriteViewHolder>
                 ivAvatar.setOnClickListener {
                     val intent = Intent(it.context, UserDetailActivity::class.java)
                     intent.putExtra(UserDetailActivity.USERNAME, favorite.login)
-                    intent.putExtra(UserDetailActivity.URL, favorite.login)
+                    intent.putExtra(UserDetailActivity.URL, favorite.url)
                     intent.putExtra(UserDetailActivity.AVATAR, favorite.avatar_url)
                     it.context.startActivity(intent)
                 }

@@ -6,7 +6,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.bangkit.githubapi.ui.FavoriteViewModel
 
 class ViewModelFactory
-private constructor(private val mApplication: Application) : ViewModelProvider.NewInstanceFactory() {
+private constructor(private val mApplication: Application) :
+    ViewModelProvider.NewInstanceFactory() {
+
     companion object {
         @Volatile
         private var INSTANCE : ViewModelFactory? = null
@@ -21,6 +23,7 @@ private constructor(private val mApplication: Application) : ViewModelProvider.N
             return INSTANCE as ViewModelFactory
         }
     }
+
     @Suppress("UNCHECKED_CAST")
 
     override fun <T : ViewModel> create(modelClass: Class<T>): T {

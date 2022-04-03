@@ -17,17 +17,6 @@ import com.bumptech.glide.Glide
 
 class UserAdapter(private val listUsers: ArrayList<User>) : RecyclerView.Adapter<UserAdapter.ListViewHolder>() {
 
-    private val listFavorites = ArrayList<Favorite>()
-
-    fun setListFavorites (list: List<Favorite>) {
-        val diffCallback = FavoriteDiffCallback(this.listFavorites, listFavorites)
-        val diffResult = DiffUtil.calculateDiff(diffCallback)
-        this.listFavorites.clear()
-        this.listFavorites.addAll(list)
-        diffResult.dispatchUpdatesTo(this)
-    }
-
-
     class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         var imgAvatar: ImageView = itemView.findViewById(R.id.iv_avatar)
         var txtUsername: TextView = itemView.findViewById(R.id.tv_username)

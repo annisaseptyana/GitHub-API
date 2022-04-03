@@ -27,7 +27,7 @@ class UserDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityUserDetailBinding
     private lateinit var favoriteViewModel: FavoriteViewModel
-    private var favorite: Favorite? = null
+    private lateinit var favorite: Favorite
     private var isExist = false
 
     companion object {
@@ -105,8 +105,9 @@ class UserDetailActivity : AppCompatActivity() {
         }.attach()
 
         favoriteViewModel.getFavorite(intent.getStringExtra(USERNAME)!!).observe(this) { favoritesList ->
-            if (favoritesList.isNotEmpty()) {
+            if (favoritesList != null) {
                 isExist = true
+                favorite = favoritesList
                 binding.favoriteButton.setImageResource(R.drawable.ic_baseline_favorite_24)
             }
             else {
@@ -121,19 +122,20 @@ class UserDetailActivity : AppCompatActivity() {
             val avatar = intent.getStringExtra(AVATAR)
 
             favorite.let {
-                favorite?.login = login
-                favorite?.url = url
-                favorite?.avatar_url = avatar
-                favorite?.date = DateHelper.getCurrentDate()
+                favorite.login = login
+                favorite.url = url
+                favorite.avatar_url = avatar
+                favorite.date = DateHelper.getCurrentDate()
 
                 if(isExist) {
-                    favoriteViewModel.update(favorite as Favorite)
-                    Toast.makeText(this, "Added to Favorites", Toast.LENGTH_SHORT).show()
+                    favoriteViewModel.delete(favorite)
+                    binding.favoriteButton.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                    Toast.makeText(this, "Removed from favorites", Toast.LENGTH_SHORT).show()
                 }
                 else {
-                    favoriteViewModel.insert(favorite as Favorite)
+                    favoriteViewModel.insert(favorite)
                     binding.favoriteButton.setImageResource(R.drawable.ic_baseline_favorite_24)
-                    Toast.makeText(this, "Added to Favorites", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, "Added to favorites", Toast.LENGTH_SHORT).show()
                 }
             }
         }

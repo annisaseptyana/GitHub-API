@@ -7,18 +7,15 @@ import com.bangkit.githubapi.entity.Favorite
 import com.bangkit.githubapi.repository.FavoriteRepository
 
 class FavoriteViewModel(application: Application) : ViewModel() {
+
     private val mFavoriteRepository: FavoriteRepository = FavoriteRepository(application)
 
     fun getAllFavorites(): LiveData<List<Favorite>> = mFavoriteRepository.getAllFavorite()
 
-    fun getFavorite(username: String): LiveData<List<Favorite>> = mFavoriteRepository.getFavorite(username)
+    fun getFavorite(username: String): LiveData<Favorite> = mFavoriteRepository.getFavorite(username)
 
     fun insert(favorite: Favorite) {
         mFavoriteRepository.insert(favorite)
-    }
-
-    fun update(favorite: Favorite) {
-        mFavoriteRepository.update(favorite)
     }
 
     fun delete(favorite: Favorite) {
